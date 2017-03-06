@@ -1,0 +1,34 @@
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+
+body {
+    padding-top: 70px;
+}
+
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.padding-input {
+    padding: 10px;
+}
+
+.panel-select {
+    background-color: beige;
+}
+
+.panel-cursor {
+    cursor: pointer;
+}
+
+.panel-cursor :hover {
+    @extend .panel-danger;
+    @extend .panel-select;
+}
+
+.in-panel {
+    background-color: white;
+}
