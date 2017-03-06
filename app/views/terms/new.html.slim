@@ -1,0 +1,15 @@
+.page-header
+  h1 Add new term
+
+.panel.panel-default
+  .panel-body
+    = form_tag '/terms', method: 'post'
+      .form-group
+        = label_tag :title, 'Title'
+        = text_field :term, :title, class: 'form-control', placeholder: 'Input russian title', required: true
+      .form-group
+        = label_tag :eng_title, 'Eng title'
+        = text_field :term, :eng_title, class: 'form-control', placeholder: 'Input english title', required: true
+      .form-group
+        a.btn.btn-default href='/' Cancel
+        = submit_tag 'Next', class: 'btn btn-success'

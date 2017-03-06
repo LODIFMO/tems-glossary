@@ -1,0 +1,7 @@
+.page-header
+  h1 Add description
+
+- if @error.blank?
+  = react_component 'TermDescription', {term: @term.to_json, descriptions: @descriptions, authenticity_token: form_authenticity_token}
+- else
+  .alert.alert-danger role='alert'= @error
