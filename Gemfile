@@ -27,6 +27,21 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Production
 gem 'rails_12factor', group: :production
 
+# auth
+gem 'devise'
+gem 'cancancan'
+gem 'rolify'
+
+# RDF
+gem 'sparql-client'
+
+# ui
+gem 'font-awesome-rails', '~> 4.4.0'
+gem 'bootstrap-sass'
+gem 'bootstrap-generators', group: :development
+gem 'slim-rails'
+gem 'react-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
