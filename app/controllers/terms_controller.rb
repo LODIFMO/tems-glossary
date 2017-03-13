@@ -2,7 +2,7 @@ class TermsController < ApplicationController
   before_action :authenticate_user!, only: %i(new create update)
 
   def index
-    @terms = Term.all
+    @terms = Term.all.includes(:user)
   end
 
   def new
@@ -12,7 +12,7 @@ class TermsController < ApplicationController
     @term = Term.create! term_params
     @term.user_id = current_user.id
     @term.save!
-    @descriptions = @term.load_descriptions
+    @descriptions = @term.query_descriptions
   rescue => e
     @error = e.message
   end

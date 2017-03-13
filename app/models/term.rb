@@ -84,6 +84,56 @@ class Term < ActiveRecord::Base
     result.first[:label].value
   end
 
+  def new_term_desc(sparql)
+    query = <<-SPARQL
+        select distinct ?label ?description where {
+            <http://dbpedia.org/resource/#{eng_title.humanize.gsub(/\s/, '_')}> rdfs:label ?label .
+            FILTER ( lang(?label) = "en" )
+        }
+        LIMIT 1
+      SPARQL
+    result = sparql.query(query)
+    result.first['label'].value
+  end
+
+  def query_descriptions
+    sparql = SPARQL::Client.new('http://dbpedia.org/sparql')
+    keyword = new_term_desc sparql
+    query = <<-SPARQL
+        SELECT DISTINCT ?concept ?rus_description_1 ?rus_description_2 ?eng_description_1 ?eng_description_2
+          WHERE {
+            ?concept rdfs:label "#{keyword}"@en .
+
+            OPTIONAL {
+              ?concept rdfs:description ?rus_description_1 .
+              FILTER ( lang(?rus_description_1) = "ru" )
+            }
+
+            OPTIONAL {
+              ?concept dbo:abstract ?rus_description_2 .
+              FILTER ( lang(?rus_description_2) = "ru" )
+            }
+
+            OPTIONAL {
+              ?concept rdfs:comment ?eng_description_1 .
+              FILTER ( lang(?eng_description_1) = "en" )
+            }
+
+            OPTIONAL {
+              ?concept dbo:abstract ?eng_description_2 .
+              FILTER ( lang(?eng_description_2) = "en" )
+            }
+          } LIMIT 1
+      SPARQL
+    result = sparql.query(query).first
+    solutions = []
+    solutions << result['rus_description_1'].value if result['rus_description_1'].present?
+    solutions << result['rus_description_2'].value if result['rus_description_2'].present?
+    solutions << result['eng_description_1'].value if result['eng_description_1'].present?
+    solutions << result['eng_description_2'].value if result['eng_description_2'].present?
+    solutions
+  end
+
   def load_descriptions
     sparql = SPARQL::Client.new("http://dbpedia.org/sparql")
     keyword = correct_keyword
