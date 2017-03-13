@@ -10,6 +10,8 @@ class TermsController < ApplicationController
 
   def create
     @term = Term.create! term_params
+    @term.user = current_user
+    @term.save!
     @descriptions = @term.load_descriptions
   rescue => e
     @error = e.message
