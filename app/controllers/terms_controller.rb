@@ -17,6 +17,13 @@ class TermsController < ApplicationController
     @error = e.message
   end
 
+  def destroy
+    @term = Term.find params[:id]
+
+    @term.destroy
+    redirect_to root_path
+  end
+
   def update
     @term = Term.find params[:id]
     @term.description = params[:term][:description]

@@ -13,7 +13,7 @@ table.table.table-hover.table-striped
       th Description
       - if current_user.present?
         th owner
-      th
+        th
   tbody
     - @terms.each do |term|
       tr
@@ -21,3 +21,6 @@ table.table.table-hover.table-striped
         td= term.description || '-'
         - if current_user.present?
           td= term.user.present? ? term.user.email : '-'
+          td
+            = link_to term, data: {:confirm => 'Вы уверены, что хотите удалить?'}, :method => :delete, class: 'btn btn-danger btn-xs', title: 'Удалить' do
+              = fa_icon 'fw trash'
