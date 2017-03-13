@@ -11,9 +11,13 @@ table.table.table-hover.table-striped
     tr
       th Term
       th Description
+      - if current_user.present?
+        th owner
       th
   tbody
     - @terms.each do |term|
       tr
         td= "#{term.title} (#{term.eng_title})"
         td= term.description || '-'
+        - if current_user.present?
+          td= term.user.email
