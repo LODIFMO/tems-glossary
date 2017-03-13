@@ -20,4 +20,4 @@ table.table.table-hover.table-striped
         td= "#{term.title} (#{term.eng_title})"
         td= term.description || '-'
         - if current_user.present?
-          td= term.user.email
+          td= term.user.present? ? term.user.email : '-'
