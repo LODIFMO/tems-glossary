@@ -1,4 +1,6 @@
 class Term < ActiveRecord::Base
+  belongs_to :user
+
   def to_json
     {
       id: id.to_s,
