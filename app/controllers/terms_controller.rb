@@ -2,7 +2,7 @@ class TermsController < ApplicationController
   before_action :authenticate_user!, only: %i(new create update)
 
   def index
-    @terms = Term.all.includes(:user)
+    @terms = Term.all.order(:title).includes(:user)
   end
 
   def new
